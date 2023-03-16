@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 import {
-  useForm,
   SubmitHandler,
-  FormProvider,
+  useFormContext,
 } from 'react-hook-form';
 
 import useAlertModal from 'shared/hooks/use-alert-modal';
@@ -18,29 +17,10 @@ import InputSupply from './InputSupply';
 import InputWorkAddress from './InputWorkAddress';
 import InputLoadPlaces from './InputLoadPlaces';
 
-const defaultValues: OrderInput = {
-  name: '',
-  phoneNumber: '',
-  fromDate: undefined,
-  toDate: undefined,
-  item: '',
-  itemDetail: '',
-  supply: '',
-  supplyDetail: '',
-  address: '',
-  loadPlace: [{
-    name: '',
-    date: undefined,
-    address: '',
-  }],
-};
-
 export default function OrderForm() {
-  const methods = useForm<OrderInput>({
-    defaultValues,
-  });
+  const { watch, handleSubmit } = useFormContext<OrderInput>();
 
-  const formData = methods.watch();
+  const formData = watch();
 
   const { showModal } = useAlertModal(
     {
@@ -57,19 +37,17 @@ export default function OrderForm() {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <InputName />
-        <InputPhoneNumber />
-        <InputOrderDate />
-        <InputItem />
-        <InputSupply />
-        <InputWorkAddress />
-        <InputLoadPlaces />
-        <div>
-          <button type="submit">등록</button>
-        </div>
-      </form>
-    </FormProvider>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InputName />
+      <InputPhoneNumber />
+      <InputOrderDate />
+      <InputItem />
+      <InputSupply />
+      <InputWorkAddress />
+      <InputLoadPlaces />
+      <div>
+        <button type="submit">등록</button>
+      </div>
+    </form>
   );
 }

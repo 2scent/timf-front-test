@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
+import { useFormContext } from 'react-hook-form';
+
 import useAlertModal from 'shared/hooks/use-alert-modal';
+
+import { OrderInput } from 'shared/types';
 
 import useOrders from '../hooks/use-orders';
 
@@ -80,6 +84,40 @@ export default function OrderList() {
     if (res.data === 'success') showModal();
   };
 
+  const { reset } = useFormContext<OrderInput>();
+
+  const copyOrder = (order: Order) => {
+    const {
+      name,
+      phoneNumber,
+      fromDate,
+      toDate,
+      item,
+      itemDetail,
+      supply,
+      supplyDetail,
+      address,
+      loadPlace,
+    } = order;
+
+    reset({
+      name,
+      phoneNumber,
+      fromDate: new Date(fromDate),
+      toDate: new Date(toDate),
+      item,
+      itemDetail,
+      supply,
+      supplyDetail,
+      address,
+      loadPlace: loadPlace.map((place) => ({
+        name: place.name,
+        date: new Date(place.date),
+        address: place.address,
+      })),
+    });
+  };
+
   if (isLoading) return <h3>로딩 중</h3>;
 
   if (isError) return <h3>에러 발생</h3>;
@@ -148,6 +186,7 @@ export default function OrderList() {
                 order={order}
                 checked={checkedOrders.has(order)}
                 toggleCheckedOrder={toggleCheckedOrder}
+                copyOrder={copyOrder}
               />
             ))}
         </tbody>

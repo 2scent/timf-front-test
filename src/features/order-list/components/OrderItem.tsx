@@ -4,9 +4,12 @@ interface OrderItemProps {
   order: Order;
   checked: boolean;
   toggleCheckedOrder: (order: Order, checked: boolean) => void;
+  copyOrder: (order: Order) => void;
 }
 
-export default function OrderItem({ order, checked, toggleCheckedOrder }: OrderItemProps) {
+export default function OrderItem({
+  order, checked, toggleCheckedOrder, copyOrder,
+}: OrderItemProps) {
   const {
     seqNo,
     name,
@@ -21,6 +24,8 @@ export default function OrderItem({ order, checked, toggleCheckedOrder }: OrderI
   const handleChangeChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     toggleCheckedOrder(order, e.target.checked);
   };
+
+  const handleClickCopy = () => copyOrder(order);
 
   return (
     <tr>
@@ -40,7 +45,14 @@ export default function OrderItem({ order, checked, toggleCheckedOrder }: OrderI
       <td>{item}</td>
       <td>{supply}</td>
       <td>{address}</td>
-      <td>오더복사</td>
+      <td>
+        <button
+          type="button"
+          onClick={handleClickCopy}
+        >
+          오더복사
+        </button>
+      </td>
     </tr>
   );
 }
