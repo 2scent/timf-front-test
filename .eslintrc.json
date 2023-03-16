@@ -25,6 +25,9 @@
         "linebreak-style": "off",
 
         "react/react-in-jsx-scope": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/require-default-props": "off",
+        "react/no-array-index-key": "off",
 
         "import/no-extraneous-dependencies": "off",
         "import/prefer-default-export": "off"
