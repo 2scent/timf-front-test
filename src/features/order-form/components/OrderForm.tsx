@@ -6,7 +6,7 @@ import {
   FormProvider,
 } from 'react-hook-form';
 
-import useDataModal from '../hooks/use-data-modal';
+import useAlertModal from 'shared/hooks/use-alert-modal';
 
 import { OrderInput } from '../types';
 
@@ -42,8 +42,11 @@ export default function OrderForm() {
 
   const formData = methods.watch();
 
-  const { showModal } = useDataModal(
-    { data: JSON.stringify(formData) },
+  const { showModal } = useAlertModal(
+    {
+      title: '등록이 완료 되었습니다',
+      content: JSON.stringify(formData),
+    },
     [formData],
   );
 

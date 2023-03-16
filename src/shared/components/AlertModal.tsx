@@ -13,24 +13,27 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-interface DataModalProps {
+interface AlertModalProps {
   isOpen: boolean;
   onClose: () => void;
-  data: any;
+  title: string;
+  content: string;
 }
 
-export default function DataModal({
+export default function AlertModal({
   isOpen,
   onClose,
-  data,
-}: DataModalProps) {
+  title,
+  content,
+}: AlertModalProps) {
   return (
     <Modal
       isOpen={isOpen}
       style={customStyles}
     >
       <button type="button" onClick={onClose}>닫기</button>
-      <p>{data}</p>
+      <h3>{title}</h3>
+      <p>{content}</p>
     </Modal>
   );
 }
