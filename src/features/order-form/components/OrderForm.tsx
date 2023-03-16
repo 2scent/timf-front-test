@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import {
   useForm,
   SubmitHandler,
@@ -45,7 +47,11 @@ export default function OrderForm() {
     [formData],
   );
 
-  const onSubmit: SubmitHandler<OrderInput> = () => showModal();
+  const onSubmit: SubmitHandler<OrderInput> = async () => {
+    const res = await axios.post('/order');
+
+    if (res.data === 'success') showModal();
+  };
 
   return (
     <FormProvider {...methods}>
