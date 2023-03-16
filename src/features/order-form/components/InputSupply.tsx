@@ -4,11 +4,11 @@ import Select from 'shared/components/Select';
 import InputText from 'shared/components/InputText';
 import ErrorMessage from 'shared/components/ErrorMessage';
 
+import { OrderInput } from 'shared/types';
+
 import { onlyNumberErrorMessage, requiredErrorMessage } from '../contants';
 
 import { onlyNumberRegex } from '../regex';
-
-import { OrderInput } from '../types';
 
 export default function InputSupply() {
   const {

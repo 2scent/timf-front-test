@@ -3,11 +3,11 @@ import { useFormContext } from 'react-hook-form';
 import InputText from 'shared/components/InputText';
 import ErrorMessage from 'shared/components/ErrorMessage';
 
+import { OrderInput } from 'shared/types';
+
 import { nameErrorMessage, requiredErrorMessage } from '../contants';
 
 import { nameRegex } from '../regex';
-
-import { OrderInput } from '../types';
 
 export default function InputName() {
   const {

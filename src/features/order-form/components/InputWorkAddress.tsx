@@ -3,9 +3,9 @@ import { useFormContext } from 'react-hook-form';
 import InputAddress from 'shared/components/InputAddress';
 import ErrorMessage from 'shared/components/ErrorMessage';
 
-import { requiredErrorMessage } from '../contants';
+import { OrderInput } from 'shared/types';
 
-import { OrderInput } from '../types';
+import { requiredErrorMessage } from '../contants';
 
 export default function InputWorkAddress() {
   const {

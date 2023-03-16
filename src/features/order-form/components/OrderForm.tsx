@@ -8,7 +8,7 @@ import {
 
 import useAlertModal from 'shared/hooks/use-alert-modal';
 
-import { OrderInput } from '../types';
+import { OrderInput } from 'shared/types';
 
 import InputName from './InputName';
 import InputPhoneNumber from './InputPhoneNumber';

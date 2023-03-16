@@ -3,11 +3,11 @@ import { useFormContext } from 'react-hook-form';
 import InputText from 'shared/components/InputText';
 import ErrorMessage from 'shared/components/ErrorMessage';
 
+import { OrderInput } from 'shared/types';
+
 import { phoneNumberErrorMessage, requiredErrorMessage } from '../contants';
 
 import { phoneNumberRegex } from '../regex';
-
-import { OrderInput } from '../types';
 
 import { phoneNumberAutoFormat } from '../utils';
 

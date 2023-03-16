@@ -5,9 +5,9 @@ import ErrorMessage from 'shared/components/ErrorMessage';
 import InputDate from 'shared/components/InputDate';
 import InputAddress from 'shared/components/InputAddress';
 
-import { nameErrorMessage, requiredErrorMessage } from '../contants';
+import { OrderInput } from 'shared/types';
 
-import { OrderInput } from '../types';
+import { nameErrorMessage, requiredErrorMessage } from '../contants';
 
 import { nameRegex } from '../regex';
 

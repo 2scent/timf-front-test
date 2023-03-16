@@ -4,9 +4,9 @@ import ErrorMessage from 'shared/components/ErrorMessage';
 import InputText from 'shared/components/InputText';
 import Select from 'shared/components/Select';
 
-import { requiredErrorMessage } from '../contants';
+import { OrderInput } from 'shared/types';
 
-import { OrderInput } from '../types';
+import { requiredErrorMessage } from '../contants';
 
 export default function InputItem() {
   const {
