@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { ModalProvider } from 'react-modal-hook';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -15,11 +16,16 @@ if (process.env.NODE_ENV === 'development') {
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
+
+const queryClient = new QueryClient();
+
 root.render((
   <React.StrictMode>
-    <ModalProvider>
-      <App />
-    </ModalProvider>
+    <QueryClientProvider client={queryClient}>
+      <ModalProvider>
+        <App />
+      </ModalProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 ));
 
