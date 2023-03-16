@@ -8,33 +8,41 @@ import useAlertModal from 'shared/hooks/use-alert-modal';
 
 import { OrderInput } from 'shared/types';
 
+import useChecks from '../hooks/use-checks';
 import useOrders from '../hooks/use-orders';
+import usePagination from '../hooks/use-pagintaion';
 
 import { Order } from '../types';
 
-import Pagination from './Pagination';
 import OrderItem from './OrderItem';
+import OrderListHeader from './OrderListHeader';
+import Pagination from './Pagination';
 
 export default function OrderList() {
   const { data: orders, isLoading, isError } = useOrders();
 
-  const [limit, setLimit] = useState(20);
-  const [page, setPage] = useState(1);
-  const offset = (page - 1) * limit;
+  const {
+    limit,
+    page,
+    offset,
+    totalPagesCount,
+    shownItemsCount: shownOrdersCount,
+    changeLimit,
+    setPage,
+  } = usePagination({
+    defaultLimit: 20,
+    totalItemsCount: orders?.length,
+  });
 
-  const [checkedOrders, setCheckedOrders] = useState(new Set<Order>());
-
-  const toggleCheckedOrder = (order: Order, checked: boolean) => {
-    const newCheckedOrders = new Set(checkedOrders);
-
-    if (checked) {
-      newCheckedOrders.add(order);
-      setCheckedOrders(newCheckedOrders);
-    } else {
-      newCheckedOrders.delete(order);
-      setCheckedOrders(newCheckedOrders);
-    }
+  const handleChangeLimit = ({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) => {
+    changeLimit(Number(value));
   };
+
+  const {
+    checks: checkedOrders,
+    setChecks: setCheckedOrders,
+    toggleCheck: toggleCheckedOrder,
+  } = useChecks<Order>();
 
   const [allChecked, setAllChecked] = useState(false);
 
@@ -49,11 +57,8 @@ export default function OrderList() {
   };
 
   useEffect(() => {
-    const shownOrdersCount = Math.min(offset + limit, orders?.length ?? Number.MAX_SAFE_INTEGER)
-        - offset;
-
     setAllChecked(checkedOrders.size === shownOrdersCount);
-  }, [checkedOrders]);
+  }, [checkedOrders, shownOrdersCount]);
 
   useEffect(() => {
     setCheckedOrders(new Set());
@@ -86,7 +91,7 @@ export default function OrderList() {
 
   const { reset } = useFormContext<OrderInput>();
 
-  const copyOrder = (order: Order) => {
+  const handleClickCopy = (order: Order) => {
     const {
       name,
       phoneNumber,
@@ -132,15 +137,7 @@ export default function OrderList() {
         </span>
         <select
           value={limit}
-          onChange={({ target: { value } }) => {
-            const newLimit = Number(value);
-
-            setLimit(newLimit);
-
-            const pagesCount = Math.ceil(orders.length / newLimit);
-
-            if (page > pagesCount) setPage(pagesCount);
-          }}
+          onChange={handleChangeLimit}
         >
           <option value="20">20</option>
           <option value="50">50</option>
@@ -158,25 +155,11 @@ export default function OrderList() {
         border: '1px solid black',
       }}
       >
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                checked={allChecked}
-                onChange={handleChangeAllChecked}
-              />
-              {!allChecked && checkedOrders.size > 0 && <span>-</span>}
-            </th>
-            <th>이름</th>
-            <th>휴대폰번호</th>
-            <th>날짜</th>
-            <th>품목</th>
-            <th>물량</th>
-            <th>출근지</th>
-            <th>오더복사</th>
-          </tr>
-        </thead>
+        <OrderListHeader
+          allChecked={allChecked}
+          anyChecked={!!checkedOrders.size}
+          onChangeAllChecked={handleChangeAllChecked}
+        />
         <tbody>
           {orders
             .slice(offset, offset + limit)
@@ -185,15 +168,14 @@ export default function OrderList() {
                 key={order.seqNo}
                 order={order}
                 checked={checkedOrders.has(order)}
-                toggleCheckedOrder={toggleCheckedOrder}
-                copyOrder={copyOrder}
+                onChangeChecked={toggleCheckedOrder}
+                onClickCopy={handleClickCopy}
               />
             ))}
         </tbody>
       </table>
       <Pagination
-        total={orders.length}
-        limit={limit}
+        totalPagesCount={totalPagesCount}
         page={page}
         setPage={setPage}
       />

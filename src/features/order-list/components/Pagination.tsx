@@ -1,18 +1,14 @@
 interface PaginationProps {
-  total: number;
-  limit: number;
+  totalPagesCount: number;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Pagination({
-  total,
-  limit,
+  totalPagesCount,
   page,
   setPage,
 }: PaginationProps) {
-  const pagesCount = Math.ceil(total / limit);
-
   return (
     <nav>
       <button
@@ -38,19 +34,19 @@ export default function Pagination({
       <button
         type="button"
         onClick={() => setPage(page + 1)}
-        disabled={page === pagesCount}
+        disabled={page === totalPagesCount}
       >
         &gt;
       </button>
       <button
         type="button"
-        onClick={() => setPage(pagesCount)}
-        disabled={page === pagesCount}
+        onClick={() => setPage(totalPagesCount)}
+        disabled={page === totalPagesCount}
       >
         &gt;&gt;
       </button>
       <span>
-        {`Page ${page} of ${pagesCount}`}
+        {`Page ${page} of ${totalPagesCount}`}
       </span>
     </nav>
   );

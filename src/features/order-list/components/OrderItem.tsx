@@ -3,12 +3,12 @@ import { Order } from '../types';
 interface OrderItemProps {
   order: Order;
   checked: boolean;
-  toggleCheckedOrder: (order: Order, checked: boolean) => void;
-  copyOrder: (order: Order) => void;
+  onChangeChecked: (order: Order, checked: boolean) => void;
+  onClickCopy: (order: Order) => void;
 }
 
 export default function OrderItem({
-  order, checked, toggleCheckedOrder, copyOrder,
+  order, checked, onChangeChecked, onClickCopy,
 }: OrderItemProps) {
   const {
     seqNo,
@@ -22,10 +22,10 @@ export default function OrderItem({
   } = order;
 
   const handleChangeChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
-    toggleCheckedOrder(order, e.target.checked);
+    onChangeChecked(order, e.target.checked);
   };
 
-  const handleClickCopy = () => copyOrder(order);
+  const handleClickCopy = () => onClickCopy(order);
 
   return (
     <tr>
