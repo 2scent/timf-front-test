@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useOrders from '../hooks/use-orders';
 
+import { Order } from '../types';
+
 import Pagination from './Pagination';
+import OrderItem from './OrderItem';
 
 export default function OrderList() {
   const { data: orders, isLoading, isError } = useOrders();
@@ -10,6 +13,44 @@ export default function OrderList() {
   const [limit, setLimit] = useState(20);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
+
+  const [checkedOrders, setCheckedOrders] = useState(new Set<Order>());
+
+  const toggleCheckedOrder = (order: Order, checked: boolean) => {
+    const newCheckedOrders = new Set(checkedOrders);
+
+    if (checked) {
+      newCheckedOrders.add(order);
+      setCheckedOrders(newCheckedOrders);
+    } else {
+      newCheckedOrders.delete(order);
+      setCheckedOrders(newCheckedOrders);
+    }
+  };
+
+  const [allChecked, setAllChecked] = useState(false);
+
+  const handleChangeAllChecked = ({ target: { checked } }: React.ChangeEvent<HTMLInputElement>) => {
+    if (checked) {
+      setCheckedOrders(new Set(orders?.slice(offset, offset + limit)));
+      setAllChecked(true);
+    } else {
+      setCheckedOrders(new Set());
+      setAllChecked(false);
+    }
+  };
+
+  useEffect(() => {
+    const shownOrdersCount = Math.min(offset + limit, orders?.length ?? Number.MAX_SAFE_INTEGER)
+        - offset;
+
+    setAllChecked(checkedOrders.size === shownOrdersCount);
+  }, [checkedOrders]);
+
+  useEffect(() => {
+    setCheckedOrders(new Set());
+    setAllChecked(false);
+  }, [limit, page]);
 
   if (isLoading) return <h3>로딩 중</h3>;
 
@@ -48,7 +89,12 @@ export default function OrderList() {
         <thead>
           <tr>
             <th>
-              <input type="checkbox" />
+              <input
+                type="checkbox"
+                checked={allChecked}
+                onChange={handleChangeAllChecked}
+              />
+              {!allChecked && checkedOrders.size > 0 && <span>-</span>}
             </th>
             <th>이름</th>
             <th>휴대폰번호</th>
@@ -60,24 +106,16 @@ export default function OrderList() {
           </tr>
         </thead>
         <tbody>
-          {orders.slice(offset, offset + limit).map(({
-            seqNo, name, phoneNumber, fromDate, toDate, item, supply, address,
-          }) => (
-            <tr key={seqNo}>
-              <td>
-                <input type="checkbox" />
-              </td>
-              <td>{name}</td>
-              <td>{phoneNumber}</td>
-              <td>
-                {`${fromDate} ~ ${toDate}`}
-              </td>
-              <td>{item}</td>
-              <td>{supply}</td>
-              <td>{address}</td>
-              <td>오더복사</td>
-            </tr>
-          ))}
+          {orders
+            .slice(offset, offset + limit)
+            .map((order) => (
+              <OrderItem
+                key={order.seqNo}
+                order={order}
+                checked={checkedOrders.has(order)}
+                toggleCheckedOrder={toggleCheckedOrder}
+              />
+            ))}
         </tbody>
       </table>
       <Pagination
