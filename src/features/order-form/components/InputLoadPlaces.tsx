@@ -30,7 +30,7 @@ export default function InputLoadPlaces() {
           type="button"
           onClick={() => append({
             name: '',
-            date: '',
+            date: undefined,
             address: '',
           })}
         >

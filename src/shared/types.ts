@@ -13,15 +13,15 @@ export interface TControl<T extends FieldValues> {
 
 export interface LoadPlaceInput {
   name: string;
-  date: string;
+  date?: Date;
   address: string;
 }
 
 export interface OrderInput {
   name: string;
   phoneNumber: string;
-  fromDate: string;
-  toDate: string;
+  fromDate?: Date;
+  toDate?: Date;
   item: string;
   itemDetail: string;
   supply: string;

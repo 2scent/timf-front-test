@@ -21,8 +21,8 @@ import InputLoadPlaces from './InputLoadPlaces';
 const defaultValues: OrderInput = {
   name: '',
   phoneNumber: '',
-  fromDate: '',
-  toDate: '',
+  fromDate: undefined,
+  toDate: undefined,
   item: '',
   itemDetail: '',
   supply: '',
@@ -30,7 +30,7 @@ const defaultValues: OrderInput = {
   address: '',
   loadPlace: [{
     name: '',
-    date: '',
+    date: undefined,
     address: '',
   }],
 };

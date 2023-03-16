@@ -34,8 +34,8 @@ export default function InputOrderDate() {
           validate: (to) => {
             if (!getValues('fromDate')) return undefined;
 
-            const fromDate = new Date(getValues('fromDate'));
-            const toDate = new Date(to as string);
+            const fromDate = getValues('fromDate')!;
+            const toDate = to as Date;
 
             return toDate > fromDate ? undefined : '시작날짜 보다 종료날짜가 더 크도록 입력 해주세요';
           },
