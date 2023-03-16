@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import axios from 'axios';
+
+import useAlertModal from 'shared/hooks/use-alert-modal';
+
 import useOrders from '../hooks/use-orders';
 
 import { Order } from '../types';
@@ -52,6 +56,30 @@ export default function OrderList() {
     setAllChecked(false);
   }, [limit, page]);
 
+  const { showModal } = useAlertModal(
+    {
+      title: '삭제가 완료 되었습니다',
+      content: JSON.stringify(
+        Array.from(checkedOrders)
+          .map(({ seqNo }) => seqNo)
+          .sort((a, b) => a - b),
+      ),
+    },
+    [checkedOrders],
+  );
+
+  const handleClickDelete = async () => {
+    if (!checkedOrders.size) {
+      // eslint-disable-next-line no-alert
+      alert('선택된 테이블 행이 없습니다');
+      return;
+    }
+
+    const res = await axios.delete('/order');
+
+    if (res.data === 'success') showModal();
+  };
+
   if (isLoading) return <h3>로딩 중</h3>;
 
   if (isError) return <h3>에러 발생</h3>;
@@ -81,6 +109,12 @@ export default function OrderList() {
           <option value="100">100</option>
         </select>
       </div>
+      <button
+        type="button"
+        onClick={handleClickDelete}
+      >
+        삭제
+      </button>
       <table style={{
         width: '100%',
         border: '1px solid black',
