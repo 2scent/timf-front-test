@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { ModalProvider } from 'react-modal-hook';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import CssBaseline from '@mui/material/CssBaseline';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -21,6 +22,7 @@ const queryClient = new QueryClient();
 
 root.render((
   <React.StrictMode>
+    <CssBaseline />
     <QueryClientProvider client={queryClient}>
       <ModalProvider>
         <App />

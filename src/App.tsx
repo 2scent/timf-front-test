@@ -4,6 +4,7 @@ import { OrderInput } from 'shared/types';
 
 import { OrderForm } from 'features/order-form';
 import { OrderList } from 'features/order-list';
+import Header from 'shared/components/Header';
 
 const defaultValues: OrderInput = {
   name: '',
@@ -28,10 +29,13 @@ export default function App() {
   });
 
   return (
-    <FormProvider {...methods}>
-      <OrderForm />
-      <hr />
-      <OrderList />
-    </FormProvider>
+    <>
+      <Header />
+      <FormProvider {...methods}>
+        <OrderForm />
+        <hr />
+        <OrderList />
+      </FormProvider>
+    </>
   );
 }
