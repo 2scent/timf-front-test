@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { ModalProvider } from 'react-modal-hook';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -18,16 +19,30 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 768,
+      md: 992,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
+
 const queryClient = new QueryClient();
 
 root.render((
   <React.StrictMode>
-    <CssBaseline />
-    <QueryClientProvider client={queryClient}>
-      <ModalProvider>
-        <App />
-      </ModalProvider>
-    </QueryClientProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <QueryClientProvider client={queryClient}>
+        <ModalProvider>
+          <App />
+        </ModalProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   </React.StrictMode>
 ));
 

@@ -26,7 +26,7 @@ export default function InputLoadPlaces() {
       spacing={3}
     >
       {fields.map((item, index) => (
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <InputLoadPlace
             key={item.id}
             index={index}
@@ -35,7 +35,7 @@ export default function InputLoadPlaces() {
         </Grid>
       ))}
       {fields.length < 3 && (
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <AddButton
             type="button"
             onClick={() => append({

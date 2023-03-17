@@ -42,15 +42,19 @@ export default function OrderForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3}>
+      <Grid
+        container
+        spacing={3}
+        sx={{ mb: '1rem' }}
+      >
         <Grid
           item
-          xs={5}
+          xs={12}
+          md={5}
           sx={{
             flexDirection: 'column',
             gap: '1rem',
             display: 'flex',
-            mb: '1rem',
           }}
         >
           <InputName />
@@ -60,7 +64,11 @@ export default function OrderForm() {
           <InputSupply />
           <InputWorkAddress />
         </Grid>
-        <Grid item xs={7}>
+        <Grid
+          item
+          xs={12}
+          md={7}
+        >
           <InputLoadPlaces />
         </Grid>
       </Grid>
