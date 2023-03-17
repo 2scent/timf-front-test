@@ -4,7 +4,15 @@ import axios from 'axios';
 
 import { useFormContext } from 'react-hook-form';
 
+import Box from '@mui/material/Box';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import Paper from '@mui/material/Paper';
+
 import useAlertModal from 'shared/hooks/use-alert-modal';
+
+import Button from 'shared/components/Button';
 
 import { OrderInput } from 'shared/types';
 
@@ -15,8 +23,9 @@ import usePagination from '../hooks/use-pagintaion';
 import { Order } from '../types';
 
 import OrderItem from './OrderItem';
-import OrderListHeader from './OrderListHeader';
+import OrderListHead from './OrderListHead';
 import Pagination from './Pagination';
+import SelectLimit from './SelectLimit';
 
 export default function OrderList() {
   const { data: orders, isLoading, isError } = useOrders();
@@ -33,10 +42,6 @@ export default function OrderList() {
     defaultLimit: 20,
     totalItemsCount: orders?.length,
   });
-
-  const handleChangeLimit = ({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) => {
-    changeLimit(Number(value));
-  };
 
   const {
     checks: checkedOrders,
@@ -128,57 +133,49 @@ export default function OrderList() {
   if (isError) return <h3>에러 발생</h3>;
 
   return (
-    <div>
-      <h3>주문 목록</h3>
-      <div>
-        <span>
-          페이지 당 표시할 게시물 수:
-          {' '}
-        </span>
-        <select
-          value={limit}
-          onChange={handleChangeLimit}
+    <>
+      <Box sx={{ pb: 1, textAlign: 'right' }}>
+        <Button
+          type="button"
+          onClick={handleClickDelete}
         >
-          <option value="20">20</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>
-      </div>
-      <button
-        type="button"
-        onClick={handleClickDelete}
-      >
-        삭제
-      </button>
-      <table style={{
-        width: '100%',
-        border: '1px solid black',
-      }}
-      >
-        <OrderListHeader
-          allChecked={allChecked}
-          anyChecked={!!checkedOrders.size}
-          onChangeAllChecked={handleChangeAllChecked}
+          삭제
+        </Button>
+      </Box>
+      <Box sx={{ pb: 1, textAlign: 'right' }}>
+        <SelectLimit
+          limit={limit}
+          limitOptions={[20, 50, 100]}
+          onChangeLimit={changeLimit}
         />
-        <tbody>
-          {orders
-            .slice(offset, offset + limit)
-            .map((order) => (
-              <OrderItem
-                key={order.seqNo}
-                order={order}
-                checked={checkedOrders.has(order)}
-                onChangeChecked={toggleCheckedOrder}
-                onClickCopy={handleClickCopy}
-              />
-            ))}
-        </tbody>
-      </table>
+      </Box>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 800 }} size="small">
+          <OrderListHead
+            allChecked={allChecked}
+            anyChecked={!!checkedOrders.size}
+            onChangeAllChecked={handleChangeAllChecked}
+          />
+          <TableBody>
+            {orders
+              .slice(offset, offset + limit)
+              .map((order) => (
+                <OrderItem
+                  key={order.seqNo}
+                  order={order}
+                  checked={checkedOrders.has(order)}
+                  onChangeChecked={toggleCheckedOrder}
+                  onClickCopy={handleClickCopy}
+                />
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <Pagination
         totalPagesCount={totalPagesCount}
         page={page}
         setPage={setPage}
       />
-    </div>
+    </>
   );
 }

@@ -1,3 +1,9 @@
+import styled from '@emotion/styled';
+
+import Checkbox from '@mui/material/Checkbox';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+
 import { Order } from '../types';
 
 interface OrderItemProps {
@@ -28,31 +34,54 @@ export default function OrderItem({
   const handleClickCopy = () => onClickCopy(order);
 
   return (
-    <tr>
-      <td>
-        <input
-          type="checkbox"
+    <TableRow>
+      <TableCell
+        align="center"
+        padding="checkbox"
+      >
+        <Checkbox
+          size="small"
           value={seqNo}
           checked={checked}
           onChange={handleChangeChecked}
         />
-      </td>
-      <td>{name}</td>
-      <td>{phoneNumber}</td>
-      <td>
+      </TableCell>
+      <TableCell align="center">
+        {name}
+      </TableCell>
+      <TableCell align="center">
+        {phoneNumber}
+      </TableCell>
+      <TableCell align="center">
         {`${fromDate} ~ ${toDate}`}
-      </td>
-      <td>{item}</td>
-      <td>{supply}</td>
-      <td>{address}</td>
-      <td>
-        <button
+      </TableCell>
+      <TableCell align="center">
+        {item}
+      </TableCell>
+      <TableCell align="center">
+        {supply}
+      </TableCell>
+      <TableCell align="center">
+        {address}
+      </TableCell>
+      <TableCell align="center">
+        <CopyOrderButton
           type="button"
           onClick={handleClickCopy}
         >
           오더복사
-        </button>
-      </td>
-    </tr>
+        </CopyOrderButton>
+      </TableCell>
+    </TableRow>
   );
 }
+
+const CopyOrderButton = styled.button`
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  text-decoration: underline;
+`;

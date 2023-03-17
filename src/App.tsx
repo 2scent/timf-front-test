@@ -1,10 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 
+import Box from '@mui/material/Box';
+
+import Header from 'shared/components/Header';
+
 import { OrderInput } from 'shared/types';
 
 import { OrderForm } from 'features/order-form';
 import { OrderList } from 'features/order-list';
-import Header from 'shared/components/Header';
 
 const defaultValues: OrderInput = {
   name: '',
@@ -31,11 +34,12 @@ export default function App() {
   return (
     <>
       <Header />
-      <FormProvider {...methods}>
-        <OrderForm />
-        <hr />
-        <OrderList />
-      </FormProvider>
+      <Box component="main" sx={{ p: 2 }}>
+        <FormProvider {...methods}>
+          <OrderForm />
+          <OrderList />
+        </FormProvider>
+      </Box>
     </>
   );
 }
