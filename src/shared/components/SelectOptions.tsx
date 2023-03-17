@@ -40,6 +40,7 @@ export default function SelectOptions<T extends FieldValues>({
         name={name}
         value={value}
         onChange={onChange}
+        displayEmpty
       >
         {options.map(({ label, value: optionValue }, index) => (
           <MenuItem
