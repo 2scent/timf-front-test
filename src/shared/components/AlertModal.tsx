@@ -1,13 +1,24 @@
 import Modal from 'react-modal';
 
+import styled from '@emotion/styled';
+
+import Box from '@mui/material/Box';
+
+import Button from './Button';
+
 const customStyles = {
   content: {
-    top: '50%',
+    top: '30%',
+    bottom: 'auto',
     left: '50%',
     right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
+
     transform: 'translate(-50%, -50%)',
+
+    marginRight: '-50%',
+    borderRadius: '.5rem',
+    width: '500px',
+    padding: '0',
   },
 };
 
@@ -31,9 +42,50 @@ export default function AlertModal({
       isOpen={isOpen}
       style={customStyles}
     >
-      <button type="button" onClick={onClose}>닫기</button>
-      <h3>{title}</h3>
-      <p>{content}</p>
+      <Box
+        sx={{
+          p: '1rem',
+          textAlign: 'right',
+        }}
+      >
+        <CloseButton
+          type="button"
+          onClick={onClose}
+        >
+          ❌
+        </CloseButton>
+      </Box>
+      <Box
+        sx={{
+          p: '1rem',
+          borderTop: '1px solid #dee2e6',
+          borderBottom: '1px solid #dee2e6',
+        }}
+      >
+        <h3>{title}</h3>
+        <p>{content}</p>
+      </Box>
+      <Box
+        sx={{
+          p: '1rem',
+          textAlign: 'right',
+        }}
+      >
+        <Button
+          type="button"
+          onClick={onClose}
+        >
+          확인
+        </Button>
+      </Box>
     </Modal>
   );
 }
+
+const CloseButton = styled.button`
+  border: 0;
+  padding: 0;
+
+  background-color: transparent;
+  cursor: pointer;
+`;
