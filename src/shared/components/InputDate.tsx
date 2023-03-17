@@ -2,9 +2,20 @@ import ReactDatePicker from 'react-datepicker';
 
 import { FieldValues, useController } from 'react-hook-form';
 
+import TextField from '@mui/material/TextField';
+
 import { TControl } from '../types';
 
-export default function InputDate<T extends FieldValues>({ control, name, rules }: TControl<T>) {
+type InputDateProps<T extends FieldValues> = TControl<T> & {
+  fullWidth?: boolean;
+};
+
+export default function InputDate<T extends FieldValues>({
+  control,
+  name,
+  rules,
+  fullWidth,
+}: InputDateProps<T>) {
   const { field: { value, onChange } } = useController({ name, rules, control });
 
   return (
@@ -14,6 +25,13 @@ export default function InputDate<T extends FieldValues>({ control, name, rules 
       dateFormat="yyyy-MM-dd"
       onFocus={(e) => e.target.blur()}
       onChange={onChange}
+      customInput={(
+        <TextField
+          fullWidth={fullWidth}
+          size="small"
+          inputProps={{ readonly: true }}
+        />
+      )}
     />
   );
 }

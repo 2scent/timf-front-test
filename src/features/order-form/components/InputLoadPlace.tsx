@@ -1,5 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 
+import styled from '@emotion/styled';
+
+import Box from '@mui/material/Box';
+
 import InputText from 'shared/components/InputText';
 import ErrorMessage from 'shared/components/ErrorMessage';
 import InputDate from 'shared/components/InputDate';
@@ -23,11 +27,27 @@ export default function InputLoadPlace({ index, onDelete }: InputLoadPlaceProps)
   } = useFormContext<OrderInput>();
 
   return (
-    <div>
-      <h3>상차지 정보</h3>
-      <div style={{ display: 'flex' }}>
+    <Box
+      sx={{
+        position: 'relative',
+
+        border: '1px solid #dee2e6',
+        borderRadius: '.375rem',
+        p: '1rem',
+      }}
+    >
+      <Title>상차지 정보</Title>
+      <Box
+        sx={{
+          flexDirection: 'column',
+          gap: '1rem',
+          display: 'flex',
+        }}
+      >
         <div>
+          <strong>담당자</strong>
           <InputText
+            fullWidth
             type="text"
             name={`loadPlace.${index}.name`}
             maxLength={20}
@@ -45,7 +65,9 @@ export default function InputLoadPlace({ index, onDelete }: InputLoadPlaceProps)
             && <ErrorMessage>{errors.loadPlace[index]?.name?.message}</ErrorMessage>}
         </div>
         <div>
+          <strong>날짜</strong>
           <InputDate
+            fullWidth
             name={`loadPlace.${index}.date`}
             control={control}
             rules={{
@@ -57,7 +79,9 @@ export default function InputLoadPlace({ index, onDelete }: InputLoadPlaceProps)
             && <ErrorMessage>{errors.loadPlace[index]?.date?.message}</ErrorMessage>}
         </div>
         <div>
+          <strong>상차지</strong>
           <InputAddress
+            fullWidth
             name={`loadPlace.${index}.address`}
             control={control}
             rules={{
@@ -69,11 +93,34 @@ export default function InputLoadPlace({ index, onDelete }: InputLoadPlaceProps)
             && <ErrorMessage>{errors.loadPlace[index]?.address?.message}</ErrorMessage>}
         </div>
         {index > 0 && (
-          <button type="button" onClick={onDelete}>
-            Delete
-          </button>
+          <DeleteButton
+            type="button"
+            onClick={onDelete}
+          >
+            ❌
+          </DeleteButton>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
+
+const Title = styled.p`
+  margin: 0;
+  margin-bottom: 1rem;
+  padding: 0;
+
+  font-size: 1.25rem;
+`;
+
+const DeleteButton = styled.button`
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+
+  border: 0;
+  padding: 0;
+
+  background-color: transparent;
+  cursor: pointer;
+`;

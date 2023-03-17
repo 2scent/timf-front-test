@@ -1,5 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
+import Grid from '@mui/material/Grid';
+
 import InputText from 'shared/components/InputText';
 import ErrorMessage from 'shared/components/ErrorMessage';
 
@@ -16,23 +18,27 @@ export default function InputName() {
   } = useFormContext<OrderInput>();
 
   return (
-    <div>
-      <span>이름</span>
-      {' '}
-      <InputText
-        type="text"
-        name="name"
-        maxLength={20}
-        control={control}
-        rules={{
-          required: requiredErrorMessage,
-          pattern: {
-            value: nameRegex,
-            message: nameErrorMessage,
-          },
-        }}
-      />
-      {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
-    </div>
+    <Grid container>
+      <Grid item xs={2}>
+        <strong>이름</strong>
+      </Grid>
+      <Grid item xs={10}>
+        <InputText
+          fullWidth
+          type="text"
+          name="name"
+          maxLength={20}
+          control={control}
+          rules={{
+            required: requiredErrorMessage,
+            pattern: {
+              value: nameRegex,
+              message: nameErrorMessage,
+            },
+          }}
+        />
+        {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+      </Grid>
+    </Grid>
   );
 }

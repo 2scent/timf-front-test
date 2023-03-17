@@ -5,7 +5,11 @@ import {
   useFormContext,
 } from 'react-hook-form';
 
+import Grid from '@mui/material/Grid';
+
 import useAlertModal from 'shared/hooks/use-alert-modal';
+
+import Button from 'shared/components/Button';
 
 import { OrderInput } from 'shared/types';
 
@@ -38,15 +42,30 @@ export default function OrderForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InputName />
-      <InputPhoneNumber />
-      <InputOrderDate />
-      <InputItem />
-      <InputSupply />
-      <InputWorkAddress />
-      <InputLoadPlaces />
+      <Grid container spacing={3}>
+        <Grid
+          item
+          xs={5}
+          sx={{
+            flexDirection: 'column',
+            gap: '1rem',
+            display: 'flex',
+            mb: '1rem',
+          }}
+        >
+          <InputName />
+          <InputPhoneNumber />
+          <InputOrderDate />
+          <InputItem />
+          <InputSupply />
+          <InputWorkAddress />
+        </Grid>
+        <Grid item xs={7}>
+          <InputLoadPlaces />
+        </Grid>
+      </Grid>
       <div>
-        <button type="submit">등록</button>
+        <Button type="submit">등록</Button>
       </div>
     </form>
   );

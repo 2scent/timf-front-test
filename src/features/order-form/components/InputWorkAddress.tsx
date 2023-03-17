@@ -1,5 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 
+import Grid from '@mui/material/Grid';
+
 import InputAddress from 'shared/components/InputAddress';
 import ErrorMessage from 'shared/components/ErrorMessage';
 
@@ -14,18 +16,21 @@ export default function InputWorkAddress() {
   } = useFormContext<OrderInput>();
 
   return (
-
-    <div>
-      출근지
-      {' '}
-      <InputAddress
-        name="address"
-        control={control}
-        rules={{
-          required: requiredErrorMessage,
-        }}
-      />
-      {errors.address && <ErrorMessage>{errors.address.message}</ErrorMessage>}
-    </div>
+    <Grid container>
+      <Grid item xs={2}>
+        <strong>출근지</strong>
+      </Grid>
+      <Grid item xs={10}>
+        <InputAddress
+          fullWidth
+          name="address"
+          control={control}
+          rules={{
+            required: requiredErrorMessage,
+          }}
+        />
+        {errors.address && <ErrorMessage>{errors.address.message}</ErrorMessage>}
+      </Grid>
+    </Grid>
   );
 }
