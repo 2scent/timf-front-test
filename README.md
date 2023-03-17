@@ -1,46 +1,79 @@
-# Getting Started with Create React App
+# 팀프레시 프론트엔드 과제
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 실행 방법
 
-## Available Scripts
+```
+// 패키지 설치
+yarn
 
-In the project directory, you can run:
+// 프로젝트 실행
+yarn start
+```
 
-### `yarn start`
+## 진행 사항
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Mock API
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- [x] 목록 조회: GET /orders
+- [x] 등록: POST /order
+- [x] 삭제: DELETE /order
 
-### `yarn test`
+### 폼
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 유효성 검사, 시나리오
 
-### `yarn build`
+- [x] 이름
+- [x] 휴대폰 번호
+- [x] 날짜
+- [x] 품목
+- [x] 물량
+- [x] 출근지
+- [x] 상차지 정보
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### 에러 메시지
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [x] 공통
+- [x] 이름
+- [x] 휴대폰 번호
+- [x] 날짜
+- [x] 물량
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### 등록
 
-### `yarn eject`
+- [x] [등록] 버튼 클릭시 POST /order api 요청
+- [x] 요청 성공시 모달 렌더링
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 테이블
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [x] 컬럼, 체크박스
+- [x] 페이지네이션
+- [x] 삭제
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 기타
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- [x] 오더 복사
+- [x] 스타일링
+- [x] 반응형
 
-## Learn More
+## src 폴더 구조
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+features // 기능별로 폴더를 구조화
+  order-form // 주문 등록 관련 기능
+  order-list // 주문 목록 관련 기능
+    api // 주문 목록 관련 API 요청 함수
+    components // 주문 목록 관련 컴포넌트
+    hooks // 주문 목록 관련 hooks
+    types.ts // 주문 목록 관련 타입
+mocks // msw 구성 폴더
+shared // 프로젝트 전반에 걸쳐 공용으로 사용되는 기능들
+  components // 공용 컴포넌트
+  hooks // 공용 hooks
+  types.ts // 공용 타입
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 하고 싶은 말
+
+개인 사정으로 시간을 많이 쓰지 못해서 여러모로 아쉬움이 남는 과제입니다. 특히 마지막에 급하게 스타일링을 하느라 높은 코드 품질을 유지하지 못한 것과 테스트 코드를 작성하지 못한 것이 가장 아쉽습니다.
+
+그럼에도 주어진 조건에서 최선을 다했고, 그 과정에서 많은 것을 배울 수 있었던 좋은 경험이었습니다. 감사합니다.
