@@ -1,5 +1,9 @@
 # 팀프레시 프론트엔드 과제
 
+## 배포
+
+- [https://thriving-nasturtium-1f928d.netlify.app/](https://thriving-nasturtium-1f928d.netlify.app/)
+
 ## 실행 방법
 
 ```
